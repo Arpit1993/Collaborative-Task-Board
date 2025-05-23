@@ -1,54 +1,63 @@
-# React + TypeScript + Vite
+Steps to run the project: 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. Go to the collaborative-task-board directory
 
-Currently, two official plugins are available:
+2. Once in the directory run "npm install"
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. Once all the dependencies are installed run "npm run dev"
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+================================================================
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+For Real time synchronization I would do the following 
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Choose a Real-Time Backend
+For real-time communication, I would opt for Socket.IO because:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+It offers reliable WebSocket abstraction.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+It supports rooms, event broadcasting, and reconnection handling.
+
+It's easy to integrate with a Node.js server and React frontend.
+
+
+2. Set Up the Socket.IO Server
+Create a simple Node.js + Express backend.
+
+Add socket.io and configure a WebSocket server.
+
+Store and broadcast updates like column creation, task movement, etc.
+
+3. Connect React App to WebSocket
+Install socket.io-client in the frontend.
+
+Initialize a WebSocket connection when the app mounts.
+
+Store socket in a global store like React Context or Zustand for global access.
+
+4. Emit Events on Local State Changes
+Whenever a task or column is updated locally (via drag-and-drop or form input), emit an event via socket.emit:
+
+5. Listen for Real-Time Updates
+Set up socket.on(...) listeners to handle incoming events.
+
+Apply updates to the local store/state accordingly.
+
+6. Apply Optimistic Updates
+On drag-and-drop or form submission, update the UI immediately.
+
+Emit the socket event in the background.
+
+Optionally, rollback the UI if the server fails or times out.
+
+7. Handle User Presence 
+On connect, emit a user:join event with user info.
+
+On disconnect, broadcast user:left.
+
+Maintain a list of online users in memory and broadcast changes.
+
+8. Sync on Reconnection
+When a client reconnects (after a drop), fetch the latest board state from the server or rejoin the socket room.
+
+This ensures that no updates are missed due to disconnection.
