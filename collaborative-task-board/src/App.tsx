@@ -6,6 +6,7 @@ import { useCallback } from "react";
 import BoardModal from "./components/BoardModal";
 import BoardTitleModal from "./components/BoardTitleModal";
 import CardModal from "./components/CardModal";
+import DragDropContainer from "./components/DragDropContainer";
 
 const AddBoardButton = styled.button`
   position: absolute;
@@ -47,6 +48,7 @@ function App() {
       <BoardModal />
       <BoardTitleModal />
       <CardModal />
+      <DragDropContainer />
     </Container>
   );
 }

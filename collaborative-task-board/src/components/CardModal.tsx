@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { cardModalState, cardState, todosState } from "../atom";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import StyledModal from "./common/StyledModal";
 import { saveTodoToLocalStorage } from "../utils/todo";
 import { useCallback } from "react";
@@ -15,7 +15,7 @@ const CardModal = () => {
   });
   const [card, setCard] = useAtom(cardState);
   const [cardModal, setCardModal] = useAtom<boolean>(cardModalState);
-  const [_, setTodos] = useAtom(todosState);
+  const setTodos = useSetAtom(todosState);
 
   const handleCloseModal = useCallback(() => {
     return setCardModal(false);

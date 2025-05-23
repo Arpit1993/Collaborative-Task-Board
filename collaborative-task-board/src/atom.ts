@@ -10,9 +10,7 @@ export const boardsState = atom({
   default: [],
 });
 
-export const todosState = atom<TodosState>({
-  default: parsedLocalStorageTodo,
-});
+export const todosState = atom<TodosState>(parsedLocalStorageTodo);
 
 export const boardTitleState = atom<string>("");
 

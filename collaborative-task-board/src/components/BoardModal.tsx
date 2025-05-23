@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { boardModalState, todosState } from "../atom";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { saveTodoToLocalStorage } from "../utils/todo";
 import StyledModal from "./common/StyledModal";
 import { useCallback } from "react";
@@ -14,7 +14,7 @@ const BoardModal = () => {
     mode: "onChange",
   });
   const [boardModal, setBoardModal] = useAtom<boolean>(boardModalState);
-  const [_, setTodos] = useAtom(todosState);
+  const setTodos = useSetAtom(todosState);
 
   const handleCloseModal = useCallback(() => {
     return setBoardModal(false);
@@ -23,7 +23,7 @@ const BoardModal = () => {
   const onValid = useCallback(() => {
     const { title } = getValues();
     setTodos((prev) => {
-      const result = { [title]: [], ...prev };
+      const result = { ...prev, [title]: [] };
       saveTodoToLocalStorage(result);
       return result;
     });
