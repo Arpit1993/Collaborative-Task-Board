@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import GlobalStyle from "./styles/Globalstyle";
-import { useSetRecoilState } from "recoil";
+import { useAtom } from "jotai";
 import { boardModalState } from "./atom";
 import { useCallback } from "react";
 import BoardModal from "./components/BoardModal";
+import BoardTitleModal from "./components/BoardTitleModal";
 
 const AddBoardButton = styled.button`
   position: absolute;
@@ -31,7 +32,7 @@ const Container = styled.div`
 `;
 
 function App() {
-  const setBoardModal = useSetRecoilState(boardModalState);
+  const [_, setBoardModal] = useAtom(boardModalState);
 
   const handleAddBoardButton = useCallback(() => {
     setBoardModal(true);
@@ -42,6 +43,8 @@ function App() {
       <AddBoardButton type="button" onClick={handleAddBoardButton}>
         ✚
       </AddBoardButton>
+      <BoardModal />
+      <BoardTitleModal />
     </Container>
   );
 }

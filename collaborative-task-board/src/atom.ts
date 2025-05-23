@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom } from "jotai";
 import type { TodosState } from "./types/common";
 
 export const TRELLO_TODO = "TRELLO_TODO";
@@ -7,16 +7,15 @@ const localStorageTodo = localStorage.getItem(TRELLO_TODO) || "{}";
 const parsedLocalStorageTodo = JSON.parse(localStorageTodo);
 
 export const boardsState = atom({
-  key: "boardsState",
   default: [],
 });
 
 export const todosState = atom<TodosState>({
-  key: "todosState",
   default: parsedLocalStorageTodo,
 });
 
-export const boardModalState = atom<boolean>({
-  key: "boardModalState",
-  default: false,
-});
+export const boardTitleState = atom<string>("");
+
+export const boardModalState = atom<boolean>(false);
+
+export const boardTitleModalState = atom<boolean>(false);
