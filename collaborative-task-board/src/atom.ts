@@ -19,3 +19,7 @@ export const boardTitleState = atom<string>("");
 export const boardModalState = atom<boolean>(false);
 
 export const boardTitleModalState = atom<boolean>(false);
+
+export const cardState = atom<object>({});
+
+export const cardModalState = atom<boolean>(false);

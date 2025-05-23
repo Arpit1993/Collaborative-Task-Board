@@ -5,6 +5,7 @@ import { boardModalState } from "./atom";
 import { useCallback } from "react";
 import BoardModal from "./components/BoardModal";
 import BoardTitleModal from "./components/BoardTitleModal";
+import CardModal from "./components/CardModal";
 
 const AddBoardButton = styled.button`
   position: absolute;
@@ -45,6 +46,7 @@ function App() {
       </AddBoardButton>
       <BoardModal />
       <BoardTitleModal />
+      <CardModal />
     </Container>
   );
 }
